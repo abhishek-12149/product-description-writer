@@ -131,42 +131,43 @@
     }
 
     .card {
-      background: var(--white);
-      border: 1px solid var(--blue-100);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 18px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.25);
+      padding: 40px;
       position: relative;
-      color: var(--gray-900);
+      color: #ffffff;
     }
 
     .usage-badge {
       margin-bottom: 14px;
       padding: 12px 14px;
       border-radius: 16px;
-      border: 1px solid rgba(59, 130, 246, 0.22);
-      background: #f8fafc;
+      border: 1px solid #334155;
+      background: transparent;
     }
 
     .usage-label {
-      font-weight: 900;
-      font-size: 0.92rem;
-      color: #0f172a;
-      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      margin-bottom: 6px;
     }
 
     .usage-bar {
       width: 100%;
-      height: 10px;
+      height: 8px;
       border-radius: 999px;
-      background: #e5e7eb;
+      background: #0f172a;
       overflow: hidden;
     }
 
     .usage-bar-fill {
       height: 100%;
       width: 0%;
-      background: #3b82f6;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
       border-radius: 999px;
       transition: width 0.35s ease, background-color 0.2s ease;
     }
@@ -176,7 +177,7 @@
     }
 
     .usage-green .usage-bar-fill {
-      background: #22c55e;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
     }
 
     .usage-yellow {
@@ -184,7 +185,7 @@
     }
 
     .usage-yellow .usage-bar-fill {
-      background: #f59e0b;
+      background: linear-gradient(90deg, #3b82f6, #6366f1);
     }
 
     .usage-red {
@@ -192,14 +193,21 @@
     }
 
     .usage-red .usage-bar-fill {
-      background: #ef4444;
+      background: linear-gradient(90deg, #ef4444, #f97316);
     }
 
     .form-title {
-      margin: 0 0 14px;
-      font-size: 1.25rem;
+      margin: 0 0 18px;
+      font-size: 22px;
       font-weight: 900;
-      color: #0f172a;
+      color: #ffffff;
+    }
+
+    .form-divider {
+      height: 1px;
+      background: #334155;
+      opacity: 0.9;
+      margin: 18px 0 18px;
     }
 
     .footer {
@@ -305,42 +313,66 @@
       grid-column: 1 / -1;
     }
 
-    label {
-      font-size: 0.95rem;
+    #writerForm label {
+      color: #94a3b8;
+      font-size: 13px;
       font-weight: 600;
-      color: var(--gray-700);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
     }
 
-    input,
-    select,
-    textarea,
-    button {
+    #writerForm input,
+    #writerForm select,
+    #writerForm textarea,
+    #writerForm button {
       font: inherit;
     }
 
-    input,
-    select,
-    textarea {
+    #writerForm input,
+    #writerForm select,
+    #writerForm textarea {
       width: 100%;
-      padding: 11px 13px;
-      border: 1px solid #dbe3ee;
-      border-radius: 12px;
-      background: #f8fafc;
-      color: var(--gray-900);
-      transition: border-color 0.2s, box-shadow 0.2s;
+      padding: 14px 16px;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 15px;
+      transition: box-shadow 0.2s, border-color 0.2s, background-color 0.2s;
     }
 
-    textarea {
+    #writerForm textarea {
       min-height: 130px;
       resize: vertical;
     }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--blue-500);
+    #writerForm input::placeholder,
+    #writerForm textarea::placeholder {
+      color: #64748b;
+      opacity: 1;
+    }
+
+    #writerForm input:focus,
+    #writerForm select:focus,
+    #writerForm textarea:focus {
+      border-color: #3b82f6;
       outline: none;
-      box-shadow: 0 0 0 4px var(--blue-50);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    #writerForm select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 20 20'%3E%3Cpath fill='%2394A3B8' d='M5.5 7.5l4.5 5 4.5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 16px 16px;
+      padding-right: 44px;
+      color: #ffffff;
+    }
+
+    #writerForm select option {
+      background: #1e293b;
+      color: #ffffff;
     }
 
     .actions {
@@ -535,6 +567,8 @@
           <div id="usageProgressBar" class="usage-bar-fill"></div>
         </div>
       </div>
+
+      <div class="form-divider" aria-hidden="true"></div>
 
       <h2 class="form-title">Generate Your Listing</h2>
 
