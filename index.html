@@ -411,15 +411,15 @@
         message.textContent =
           "You've used all 5 free generations!\n\n" +
           "Upgrade to Pro for unlimited generations — $19/month\n\n" +
-          "[Upgrade to Pro] button (blue, prominent)";
+        "Upgrade to Pro";
 
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "btn-primary";
         btn.textContent = "Upgrade to Pro";
-        btn.addEventListener("click", () => {
-          alert("Payment coming soon! Email us at [your email] to get early access.");
-        });
+      btn.addEventListener("click", () => {
+        alert("Payment coming soon! Email us at abhishek@gmail.com to get early access.");
+      });
 
         results.appendChild(message);
         results.appendChild(btn);
