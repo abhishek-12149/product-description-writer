@@ -1,600 +1,909 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Product Description Writer</title>
-    <style>
-      :root {
-        --blue-50: #eff6ff;
-        --blue-100: #dbeafe;
-        --blue-500: #3b82f6;
-        --blue-600: #2563eb;
-        --blue-700: #1d4ed8;
-        --gray-100: #f3f4f6;
-        --gray-300: #d1d5db;
-        --gray-500: #6b7280;
-        --gray-700: #374151;
-        --gray-900: #111827;
-        --white: #ffffff;
-        --red-50: #fef2f2;
-        --red-700: #b91c1c;
-        --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
-        --radius: 14px;
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Product Description Writer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --gray-100: #f3f4f6;
+      --gray-300: #d1d5db;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --white: #ffffff;
+      --red-50: #fef2f2;
+      --red-700: #b91c1c;
+      --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+      --radius: 16px;
+    }
 
-      * {
-        box-sizing: border-box;
-      }
+    * {
+      box-sizing: border-box;
+    }
 
-      body {
-        margin: 0;
-        font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background: var(--white);
-        color: var(--gray-900);
-        line-height: 1.5;
-      }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      line-height: 1.5;
+    }
 
-      .app {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 24px 16px 40px;
-      }
+    .app {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 16px 48px;
+    }
 
-      .header {
-        margin-bottom: 22px;
-      }
+    .hero {
+      text-align: center;
+      padding: 18px 0 22px;
+      margin-bottom: 22px;
+    }
 
-      .header h1 {
-        margin: 0;
-        font-size: 1.9rem;
-        color: var(--blue-700);
-      }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.28);
+      color: #dbeafe;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
 
-      .header p {
-        margin: 8px 0 0;
-        color: var(--gray-500);
-      }
+    .hero-badge .sparkle {
+      color: #93c5fd;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
 
-      .card {
-        background: var(--white);
-        border: 1px solid var(--blue-100);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 18px;
-        position: relative;
-      }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.75rem, 2.8vw, 2.55rem);
+      color: #ffffff;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
 
-      .usage-badge {
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        padding: 7px 10px;
-        border-radius: 999px;
-        font-size: 0.82rem;
-        font-weight: 700;
-        border: 1px solid transparent;
-        background: rgba(59, 130, 246, 0.08);
-        color: var(--blue-700);
-        max-width: calc(100% - 28px);
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-      }
+    .hero p {
+      margin: 12px auto 0;
+      max-width: 760px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
 
-      .usage-green {
-        background: #dcfce7;
-        border-color: #86efac;
-        color: #166534;
-      }
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
 
-      .usage-yellow {
-        background: #fef9c3;
-        border-color: #facc15;
-        color: #854d0e;
-      }
+    .trust-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e5e7eb;
+      font-weight: 700;
+    }
 
-      .usage-red {
-        background: #fee2e2;
-        border-color: #fca5a5;
-        color: #991b1b;
-      }
+    .trust-sep {
+      color: #64748b;
+      font-weight: 900;
+      padding: 0 2px;
+      user-select: none;
+    }
 
-      .upgrade-message {
-        white-space: pre-wrap;
-        font-weight: 700;
-        color: var(--gray-900);
-      }
+    .header {
+      margin-bottom: 22px;
+    }
 
+    .header h1 {
+      margin: 0;
+      font-size: 1.9rem;
+      color: var(--blue-700);
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      color: var(--gray-500);
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position: relative;
+      color: var(--gray-900);
+    }
+
+    .usage-badge {
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(59, 130, 246, 0.22);
+      background: #f8fafc;
+    }
+
+    .usage-label {
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .usage-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .usage-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #3b82f6;
+      border-radius: 999px;
+      transition: width 0.35s ease, background-color 0.2s ease;
+    }
+
+    .usage-green {
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .usage-green .usage-bar-fill {
+      background: #22c55e;
+    }
+
+    .usage-yellow {
+      border-color: rgba(250, 204, 21, 0.45);
+    }
+
+    .usage-yellow .usage-bar-fill {
+      background: #f59e0b;
+    }
+
+    .usage-red {
+      border-color: rgba(239, 68, 68, 0.45);
+    }
+
+    .usage-red .usage-bar-fill {
+      background: #ef4444;
+    }
+
+    .form-title {
+      margin: 0 0 14px;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .footer {
+      margin-top: 26px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      text-align: center;
+      color: #cbd5e1;
+    }
+
+    .footer-title {
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .footer-made,
+    .footer-email {
+      margin-bottom: 6px;
+      color: #cbd5e1;
+    }
+
+    #results:not([hidden]) .result-card {
+      animation: fadeInUp 0.35s ease both;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .upgrade-card {
+      border-radius: 18px;
+      padding: 18px 16px;
+      background: linear-gradient(135deg, #0b1226, #0f2a63);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      color: #ffffff;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .upgrade-headline {
+      margin: 10px 0 6px;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .upgrade-subtext {
+      color: rgba(226, 232, 240, 0.95);
+      margin: 0 0 14px;
+      font-weight: 600;
+    }
+
+    .upgrade-crown {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #93c5fd;
+      font-weight: 900;
+    }
+
+    .upgrade-benefits {
+      margin: 0 0 16px;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .upgrade-benefits li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-weight: 700;
+      color: #e5e7eb;
+    }
+
+    .upgrade-benefits .check {
+      color: #22c55e;
+      font-weight: 900;
+      margin-top: 2px;
+      min-width: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid #dbe3ee;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: var(--gray-900);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--blue-500);
+      outline: none;
+      box-shadow: 0 0 0 4px var(--blue-50);
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .btn-primary {
+      border: none;
+      background: linear-gradient(180deg, var(--blue-500), var(--blue-700));
+      color: var(--white);
+      font-weight: 600;
+      padding: 14px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -30%;
+      width: 60%;
+      height: 180%;
+      transform: rotate(25deg);
+      background: rgba(255, 255, 255, 0.28);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:hover:not(:disabled)::after {
+      opacity: 1;
+      animation: shine 0.6s ease forwards;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    #generateBtn {
+      width: 100%;
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -30%;
+      }
+      100% {
+        left: 110%;
+      }
+    }
+
+    .message {
+      font-size: 0.95rem;
+      color: var(--gray-700);
+    }
+
+    .error {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid #fecaca;
+      background: var(--red-50);
+      border-radius: 12px;
+      color: var(--red-700);
+      white-space: pre-wrap;
+    }
+
+    .results {
+      margin-top: 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .result-card {
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 16px;
+      background: #ffffff;
+      border-left: 6px solid transparent;
+      box-shadow: 0 10px 25px rgba(17, 24, 39, 0.06);
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 34px rgba(17, 24, 39, 0.1);
+    }
+
+    #results .result-card:nth-child(1) {
+      border-left-color: #3b82f6;
+    }
+
+    #results .result-card:nth-child(2) {
+      border-left-color: #8b5cf6;
+    }
+
+    #results .result-card:nth-child(3) {
+      border-left-color: #10b981;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .result-header h3 {
+      margin: 0;
+      color: #0f172a;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .btn-copy {
+      border: 1px solid var(--blue-500);
+      color: var(--blue-700);
+      background: var(--white);
+      border-radius: 10px;
+      padding: 7px 11px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: var(--blue-50);
+    }
+
+    .result-content {
+      color: var(--gray-900);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    ul.bullets {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    ul.bullets li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 720px) {
       .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
+        grid-template-columns: 1fr;
       }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="sparkle" aria-hidden="true">✦</span>
+        <span>AI Powered</span>
+      </div>
+      <h1>Write Product Descriptions That Sell</h1>
+      <p>
+        Generate SEO-optimized listings for Amazon, Shopify and Etsy in 10 seconds — powered by AI
+      </p>
+      <div class="trust-row" aria-label="Trust badges">
+        <div class="trust-badge">10x Faster</div>
+        <div class="trust-sep" aria-hidden="true">|</div>
+        <div class="trust-badge">SEO Optimized</div>
+        <div class="trust-sep" aria-hidden="true">|</div>
+        <div class="trust-badge">5 Platforms</div>
+      </div>
+    </section>
 
-      .field {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
+    <section class="card">
+      <div id="usageBadge" class="usage-badge usage-green">
+        <div id="usageLabel" class="usage-label">Free generations used: 0 / 5</div>
+        <div class="usage-bar" aria-hidden="true">
+          <div id="usageProgressBar" class="usage-bar-fill"></div>
+        </div>
+      </div>
 
-      .field.full {
-        grid-column: 1 / -1;
-      }
+      <h2 class="form-title">Generate Your Listing</h2>
 
-      label {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--gray-700);
-      }
-
-      input,
-      select,
-      textarea,
-      button {
-        font: inherit;
-      }
-
-      input,
-      select,
-      textarea {
-        width: 100%;
-        padding: 11px 13px;
-        border: 1px solid var(--gray-300);
-        border-radius: 12px;
-        background: var(--white);
-        color: var(--gray-900);
-        transition: border-color 0.2s, box-shadow 0.2s;
-      }
-
-      textarea {
-        min-height: 130px;
-        resize: vertical;
-      }
-
-      input:focus,
-      select:focus,
-      textarea:focus {
-        border-color: var(--blue-500);
-        outline: none;
-        box-shadow: 0 0 0 4px var(--blue-50);
-      }
-
-      .actions {
-        margin-top: 16px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        align-items: center;
-      }
-
-      .btn-primary {
-        border: none;
-        background: linear-gradient(180deg, var(--blue-500), var(--blue-700));
-        color: var(--white);
-        font-weight: 600;
-        padding: 11px 18px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: transform 0.15s ease, opacity 0.2s;
-      }
-
-      .btn-primary:hover:not(:disabled) {
-        transform: translateY(-1px);
-      }
-
-      .btn-primary:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
-      }
-
-      .message {
-        font-size: 0.95rem;
-        color: var(--gray-700);
-      }
-
-      .error {
-        margin-top: 14px;
-        padding: 12px;
-        border: 1px solid #fecaca;
-        background: var(--red-50);
-        border-radius: 12px;
-        color: var(--red-700);
-        white-space: pre-wrap;
-      }
-
-      .results {
-        margin-top: 20px;
-        display: grid;
-        gap: 14px;
-      }
-
-      .result-card {
-        border: 1px solid var(--blue-100);
-        border-radius: var(--radius);
-        padding: 14px;
-        background: #fcfdff;
-      }
-
-      .result-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
-      }
-
-      .result-header h3 {
-        margin: 0;
-        color: var(--blue-700);
-        font-size: 1.05rem;
-      }
-
-      .btn-copy {
-        border: 1px solid var(--blue-500);
-        color: var(--blue-700);
-        background: var(--white);
-        border-radius: 10px;
-        padding: 7px 11px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: background-color 0.2s;
-      }
-
-      .btn-copy:hover {
-        background: var(--blue-50);
-      }
-
-      .result-content {
-        color: var(--gray-900);
-        white-space: pre-wrap;
-        word-wrap: break-word;
-      }
-
-      ul.bullets {
-        margin: 0;
-        padding-left: 20px;
-      }
-
-      ul.bullets li {
-        margin-bottom: 6px;
-      }
-
-      @media (max-width: 720px) {
-        .form-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <main class="app">
-      <section class="header">
-        <h1>AI Product Description Writer</h1>
-        <p>Generate high-converting product listings for your e-commerce store with Gemini.</p>
-      </section>
-
-      <section class="card">
-        <div id="usageBadge" class="usage-badge usage-green">Free generations remaining: 5 / 5</div>
-        <form id="writerForm">
-          <div class="form-grid">
-            <div class="field">
-              <label for="productName">Product name</label>
-              <input id="productName" name="productName" type="text" required />
-            </div>
-
-            <div class="field">
-              <label for="category">Product category</label>
-              <select id="category" name="category" required>
-                <option value="">Select category</option>
-                <option>Electronics</option>
-                <option>Clothing</option>
-                <option>Home &amp; Kitchen</option>
-                <option>Beauty</option>
-                <option>Sports</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div class="field full">
-              <label for="features">Key features</label>
-              <textarea
-                id="features"
-                name="features"
-                placeholder="List 3-5 key features, one per line"
-                required
-              ></textarea>
-            </div>
-
-            <div class="field">
-              <label for="targetCustomer">Target customer</label>
-              <input
-                id="targetCustomer"
-                name="targetCustomer"
-                type="text"
-                placeholder="e.g. busy moms, gym enthusiasts"
-                required
-              />
-            </div>
-
-            <div class="field">
-              <label for="platform">Platform</label>
-              <select id="platform" name="platform" required>
-                <option value="">Select platform</option>
-                <option>Amazon</option>
-                <option>Shopify</option>
-                <option>Etsy</option>
-              </select>
-            </div>
+      <form id="writerForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="productName">Product name</label>
+            <input id="productName" name="productName" type="text" required />
           </div>
 
-          <div class="actions">
-            <button type="submit" id="generateBtn" class="btn-primary">Generate Description</button>
-            <span id="statusMessage" class="message" aria-live="polite"></span>
+          <div class="field">
+            <label for="category">Product category</label>
+            <select id="category" name="category" required>
+              <option value="">Select category</option>
+              <option>Electronics</option>
+              <option>Clothing</option>
+              <option>Home &amp; Kitchen</option>
+              <option>Beauty</option>
+              <option>Sports</option>
+              <option>Other</option>
+            </select>
           </div>
-        </form>
 
-        <div id="errorBox" class="error" hidden></div>
-        <section id="results" class="results" hidden></section>
-      </section>
-    </main>
+          <div class="field full">
+            <label for="features">Key features</label>
+            <textarea
+              id="features"
+              name="features"
+              placeholder="List 3-5 key features, one per line"
+              required
+            ></textarea>
+          </div>
 
-    <script>
-      const form = document.getElementById("writerForm");
-      const generateBtn = document.getElementById("generateBtn");
-      const statusMessage = document.getElementById("statusMessage");
-      const errorBox = document.getElementById("errorBox");
-      const results = document.getElementById("results");
-      const usageBadge = document.getElementById("usageBadge");
+          <div class="field">
+            <label for="targetCustomer">Target customer</label>
+            <input
+              id="targetCustomer"
+              name="targetCustomer"
+              type="text"
+              placeholder="e.g. busy moms, gym enthusiasts"
+              required
+            />
+          </div>
 
-      const GENERATION_LIMIT = 5;
+          <div class="field">
+            <label for="platform">Platform</label>
+            <select id="platform" name="platform" required>
+              <option value="">Select platform</option>
+              <option>Amazon</option>
+              <option>Shopify</option>
+              <option>Etsy</option>
+            </select>
+          </div>
+        </div>
 
-      function safeLocalStorageGet(key, fallback) {
-        try {
-          const value = localStorage.getItem(key);
-          return value === null ? fallback : value;
-        } catch {
-          return fallback;
-        }
+        <div class="actions">
+          <button type="submit" id="generateBtn" class="btn-primary">Generate Description</button>
+          <span id="statusMessage" class="message" aria-live="polite"></span>
+        </div>
+      </form>
+
+      <div id="errorBox" class="error" hidden></div>
+      <section id="results" class="results" hidden></section>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-title">AI Product Description Writer</div>
+      <div class="footer-made">Made with AI</div>
+      <div class="footer-email">Your email: abhishek@gmail.com</div>
+    </footer>
+  </main>
+
+  <script>
+    const form = document.getElementById("writerForm");
+    const generateBtn = document.getElementById("generateBtn");
+    const statusMessage = document.getElementById("statusMessage");
+    const errorBox = document.getElementById("errorBox");
+    const results = document.getElementById("results");
+    const usageBadge = document.getElementById("usageBadge");
+    const usageLabel = document.getElementById("usageLabel");
+    const usageProgressBar = document.getElementById("usageProgressBar");
+
+    const GENERATION_LIMIT = 5;
+
+    function safeLocalStorageGet(key, fallback) {
+      try {
+        const value = localStorage.getItem(key);
+        return value === null ? fallback : value;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function safeLocalStorageSet(key, value) {
+      try {
+        localStorage.setItem(key, String(value));
+      } catch {
+        // If storage is unavailable, the app will still function, just without limits.
+      }
+    }
+
+    function getIsPaidUser() {
+      return safeLocalStorageGet("is_paid_user", "false") === "true";
+    }
+
+    function getGenerationCount() {
+      const raw = safeLocalStorageGet("generation_count", "0");
+      const n = parseInt(raw, 10);
+      if (!Number.isFinite(n) || n < 0) return 0;
+      return n;
+    }
+
+    function initUsageState() {
+      // Initialize keys so the UI is deterministic.
+      const hasPaidKey = safeLocalStorageGet("is_paid_user", null) !== null;
+      if (!hasPaidKey) safeLocalStorageSet("is_paid_user", "false");
+
+      const hasCountKey = safeLocalStorageGet("generation_count", null) !== null;
+      if (!hasCountKey) safeLocalStorageSet("generation_count", "0");
+    }
+
+    function updateUsageBadge() {
+      if (!usageBadge) return;
+
+      const isPaid = getIsPaidUser();
+      const count = getGenerationCount();
+      const used = isPaid ? Math.min(count, GENERATION_LIMIT) : Math.min(count, GENERATION_LIMIT);
+
+      if (usageLabel) {
+        usageLabel.textContent = `Free generations used: ${used} / ${GENERATION_LIMIT}`;
+      }
+      if (usageProgressBar) {
+        usageProgressBar.style.width = `${(used / GENERATION_LIMIT) * 100}%`;
       }
 
-      function safeLocalStorageSet(key, value) {
-        try {
-          localStorage.setItem(key, String(value));
-        } catch {
-          // If storage is unavailable, the app will still function, just without limits.
-        }
-      }
+      usageBadge.classList.remove("usage-green", "usage-yellow", "usage-red");
 
-      function getIsPaidUser() {
-        return safeLocalStorageGet("is_paid_user", "false") === "true";
-      }
+      // Thresholds: green (0-2 used), yellow (3-4 used), red (5 used)
+      if (used <= 2) usageBadge.classList.add("usage-green");
+      else if (used <= 4) usageBadge.classList.add("usage-yellow");
+      else usageBadge.classList.add("usage-red");
+    }
 
-      function getGenerationCount() {
-        const raw = safeLocalStorageGet("generation_count", "0");
-        const n = parseInt(raw, 10);
-        if (!Number.isFinite(n) || n < 0) return 0;
-        return n;
-      }
+    function showUpgradeMessage() {
+      results.hidden = false;
+      results.innerHTML = "";
+      errorBox.hidden = true;
 
-      function initUsageState() {
-        // Initialize keys so the UI is deterministic.
-        const hasPaidKey = safeLocalStorageGet("is_paid_user", null) !== null;
-        if (!hasPaidKey) safeLocalStorageSet("is_paid_user", "false");
+      const upgradeCard = document.createElement("article");
+      upgradeCard.className = "upgrade-card";
 
-        const hasCountKey = safeLocalStorageGet("generation_count", null) !== null;
-        if (!hasCountKey) safeLocalStorageSet("generation_count", "0");
-      }
+      const crown = document.createElement("div");
+      crown.className = "upgrade-crown";
+      crown.textContent = "♛ Upgrade to Pro";
+      upgradeCard.appendChild(crown);
 
-      function updateUsageBadge() {
-        if (!usageBadge) return;
+      const headline = document.createElement("div");
+      headline.className = "upgrade-headline";
+      headline.textContent = "You've unlocked everything free has to offer";
+      upgradeCard.appendChild(headline);
 
-        const isPaid = getIsPaidUser();
-        const count = getGenerationCount();
-        const remaining = isPaid ? GENERATION_LIMIT : Math.max(0, GENERATION_LIMIT - count);
+      const subtext = document.createElement("p");
+      subtext.className = "upgrade-subtext";
+      subtext.textContent = "Join Pro for unlimited generations — $19/month";
+      upgradeCard.appendChild(subtext);
 
-        usageBadge.textContent = `Free generations remaining: ${remaining} / ${GENERATION_LIMIT}`;
-        usageBadge.classList.remove("usage-green", "usage-yellow", "usage-red");
+      const benefits = document.createElement("ul");
+      benefits.className = "upgrade-benefits";
+      const benefitsList = [
+        "Unlimited generations",
+        "All platforms supported",
+        "Priority support",
+      ];
+      benefitsList.forEach((benefit) => {
+        const li = document.createElement("li");
+        const check = document.createElement("span");
+        check.className = "check";
+        check.textContent = "✓";
+        const text = document.createElement("span");
+        text.textContent = benefit;
+        li.appendChild(check);
+        li.appendChild(text);
+        benefits.appendChild(li);
+      });
+      upgradeCard.appendChild(benefits);
 
-        if (remaining >= 3) usageBadge.classList.add("usage-green");
-        else if (remaining === 2) usageBadge.classList.add("usage-yellow");
-        else usageBadge.classList.add("usage-red");
-      }
-
-      function showUpgradeMessage() {
-        results.hidden = false;
-        results.innerHTML = "";
-        errorBox.hidden = true;
-
-        const message = document.createElement("div");
-        message.className = "upgrade-message";
-        message.textContent =
-          "You've used all 5 free generations!\n\n" +
-          "Upgrade to Pro for unlimited generations — $19/month";
-
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "btn-primary";
-        btn.textContent = "Upgrade to Pro";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "btn-primary";
+      btn.textContent = "Upgrade to Pro";
       btn.addEventListener("click", () => {
         alert("Payment coming soon! Email us at abhishek@gmail.com to get early access.");
       });
 
-        results.appendChild(message);
-        results.appendChild(btn);
-      }
+      upgradeCard.appendChild(btn);
+      results.appendChild(upgradeCard);
+    }
 
-      initUsageState();
-      updateUsageBadge();
+    initUsageState();
+    updateUsageBadge();
 
-      function setLoading(isLoading) {
-        generateBtn.disabled = isLoading;
-        statusMessage.textContent = isLoading ? "Generating your description..." : "";
-      }
+    function setLoading(isLoading) {
+      generateBtn.disabled = isLoading;
+      statusMessage.textContent = isLoading ? "Generating your description..." : "";
+    }
 
-      function extractSection(text, startLabel, endLabel) {
-        const start = text.indexOf(startLabel);
-        if (start === -1) return "";
-        const contentStart = start + startLabel.length;
-        const end = endLabel ? text.indexOf(endLabel, contentStart) : -1;
-        const segment = end === -1 ? text.slice(contentStart) : text.slice(contentStart, end);
-        return segment.trim();
-      }
+    function extractSection(text, startLabel, endLabel) {
+      const start = text.indexOf(startLabel);
+      if (start === -1) return "";
+      const contentStart = start + startLabel.length;
+      const end = endLabel ? text.indexOf(endLabel, contentStart) : -1;
+      const segment = end === -1 ? text.slice(contentStart) : text.slice(contentStart, end);
+      return segment.trim();
+    }
 
-      function parseGeminiText(text) {
-        const title = extractSection(text, "TITLE:", "BULLET POINTS:");
-        const bulletsRaw = extractSection(text, "BULLET POINTS:", "DESCRIPTION:");
-        const description = extractSection(text, "DESCRIPTION:", null);
+    function parseGeminiText(text) {
+      const title = extractSection(text, "TITLE:", "BULLET POINTS:");
+      const bulletsRaw = extractSection(text, "BULLET POINTS:", "DESCRIPTION:");
+      const description = extractSection(text, "DESCRIPTION:", null);
 
-        const bullets = bulletsRaw
-          .split("\n")
-          .map((line) => line.trim())
-          .filter((line) => line.startsWith("-") || line.startsWith("•"))
-          .map((line) => line.replace(/^[-•]+\s*/, "").trim());
+      const bullets = bulletsRaw
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.startsWith("-") || line.startsWith("•"))
+        .map((line) => line.replace(/^[-•]+\s*/, "").trim());
 
-        return { title, bullets, description };
-      }
+      return { title, bullets, description };
+    }
 
-      function createResultCard(title, contentNode, copyText) {
-        const card = document.createElement("article");
-        card.className = "result-card";
+    function createResultCard(title, contentNode, copyText) {
+      const card = document.createElement("article");
+      card.className = "result-card";
 
-        const header = document.createElement("div");
-        header.className = "result-header";
+      const header = document.createElement("div");
+      header.className = "result-header";
 
-        const heading = document.createElement("h3");
-        heading.textContent = title;
+      const heading = document.createElement("h3");
+      heading.textContent = title;
 
-        const copyButton = document.createElement("button");
-        copyButton.type = "button";
-        copyButton.className = "btn-copy";
-        copyButton.textContent = "Copy";
-        copyButton.addEventListener("click", async () => {
-          try {
-            await navigator.clipboard.writeText(copyText);
-            copyButton.textContent = "Copied!";
-            setTimeout(() => {
-              copyButton.textContent = "Copy";
-            }, 1200);
-          } catch (err) {
-            alert("Copy failed: " + err.message);
-          }
-        });
-
-        header.appendChild(heading);
-        header.appendChild(copyButton);
-        card.appendChild(header);
-        card.appendChild(contentNode);
-        return card;
-      }
-
-      function renderOutput(parsed) {
-        results.innerHTML = "";
-
-        const titleNode = document.createElement("div");
-        titleNode.className = "result-content";
-        titleNode.textContent = parsed.title || "No title returned.";
-        results.appendChild(createResultCard("Title", titleNode, titleNode.textContent));
-
-        const bulletsWrap = document.createElement("div");
-        bulletsWrap.className = "result-content";
-        const ul = document.createElement("ul");
-        ul.className = "bullets";
-
-        if (parsed.bullets.length) {
-          parsed.bullets.forEach((bullet) => {
-            const li = document.createElement("li");
-            li.textContent = bullet;
-            ul.appendChild(li);
-          });
-        } else {
-          const li = document.createElement("li");
-          li.textContent = "No bullet points returned.";
-          ul.appendChild(li);
-        }
-
-        bulletsWrap.appendChild(ul);
-        results.appendChild(
-          createResultCard(
-            "Bullet Points",
-            bulletsWrap,
-            parsed.bullets.map((b) => "- " + b).join("\n") || "No bullet points returned."
-          )
-        );
-
-        const descriptionNode = document.createElement("div");
-        descriptionNode.className = "result-content";
-        descriptionNode.textContent = parsed.description || "No description returned.";
-        results.appendChild(
-          createResultCard("Description", descriptionNode, descriptionNode.textContent)
-        );
-
-        results.hidden = false;
-      }
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        errorBox.hidden = true;
-        results.hidden = true;
-        results.innerHTML = "";
-
-        const productName = document.getElementById("productName").value.trim();
-        const productCategory = document.getElementById("category").value.trim();
-        const keyFeatures = document.getElementById("features").value.trim();
-        const targetCustomer = document.getElementById("targetCustomer").value.trim();
-        const platform = document.getElementById("platform").value.trim();
-
-        const isPaid = getIsPaidUser();
-        const count = getGenerationCount();
-        if (!isPaid && count >= GENERATION_LIMIT) {
-          showUpgradeMessage();
-          return;
-        }
-
-        setLoading(true);
-
+      const copyButton = document.createElement("button");
+      copyButton.type = "button";
+      copyButton.className = "btn-copy";
+      copyButton.textContent = "Copy";
+      copyButton.addEventListener("click", async () => {
         try {
-          const response = await fetch("/api/generate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              productName,
-              productCategory,
-              keyFeatures,
-              targetCustomer,
-              platform
-            })
-          });
-
-          const data = await response.json();
-
-          if (!response.ok) {
-            const apiError =
-              data && data.error
-                ? data.error
-                : `HTTP ${response.status}`;
-            throw new Error(apiError);
-          }
-
-          const generatedText = data.result;
-          if (!generatedText) {
-            throw new Error("API returned an empty response.");
-          }
-
-          const parsed = parseGeminiText(generatedText);
-          renderOutput(parsed);
-
-          if (!isPaid) {
-            safeLocalStorageSet("generation_count", count + 1);
-            updateUsageBadge();
-          }
-        } catch (error) {
-          errorBox.textContent = error.message;
-          errorBox.hidden = false;
-        } finally {
-          setLoading(false);
+          await navigator.clipboard.writeText(copyText);
+          copyButton.textContent = "Copied! ✓";
+          setTimeout(() => {
+            copyButton.textContent = "Copy";
+          }, 1200);
+        } catch (err) {
+          alert("Copy failed: " + err.message);
         }
       });
-    </script>
-  </body>
-  </html>
+
+      header.appendChild(heading);
+      header.appendChild(copyButton);
+      card.appendChild(header);
+      card.appendChild(contentNode);
+      return card;
+    }
+
+    function renderOutput(parsed) {
+      results.innerHTML = "";
+
+      const titleNode = document.createElement("div");
+      titleNode.className = "result-content";
+      titleNode.textContent = parsed.title || "No title returned.";
+      results.appendChild(createResultCard("Title", titleNode, titleNode.textContent));
+
+      const bulletsWrap = document.createElement("div");
+      bulletsWrap.className = "result-content";
+      const ul = document.createElement("ul");
+      ul.className = "bullets";
+
+      if (parsed.bullets.length) {
+        parsed.bullets.forEach((bullet) => {
+          const li = document.createElement("li");
+          li.textContent = bullet;
+          ul.appendChild(li);
+        });
+      } else {
+        const li = document.createElement("li");
+        li.textContent = "No bullet points returned.";
+        ul.appendChild(li);
+      }
+
+      bulletsWrap.appendChild(ul);
+      results.appendChild(
+        createResultCard(
+          "Bullet Points",
+          bulletsWrap,
+          parsed.bullets.map((b) => "- " + b).join("\n") || "No bullet points returned."
+        )
+      );
+
+      const descriptionNode = document.createElement("div");
+      descriptionNode.className = "result-content";
+      descriptionNode.textContent = parsed.description || "No description returned.";
+      results.appendChild(
+        createResultCard("Description", descriptionNode, descriptionNode.textContent)
+      );
+
+      results.hidden = false;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorBox.hidden = true;
+      results.hidden = true;
+      results.innerHTML = "";
+
+      const productName = document.getElementById("productName").value.trim();
+      const productCategory = document.getElementById("category").value.trim();
+      const keyFeatures = document.getElementById("features").value.trim();
+      const targetCustomer = document.getElementById("targetCustomer").value.trim();
+      const platform = document.getElementById("platform").value.trim();
+
+      const isPaid = getIsPaidUser();
+      const count = getGenerationCount();
+      if (!isPaid && count >= GENERATION_LIMIT) {
+        showUpgradeMessage();
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            productName,
+            productCategory,
+            keyFeatures,
+            targetCustomer,
+            platform
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          const apiError =
+            data && data.error
+              ? data.error
+              : `HTTP ${response.status}`;
+          throw new Error(apiError);
+        }
+
+        const generatedText = data.result;
+        if (!generatedText) {
+          throw new Error("API returned an empty response.");
+        }
+
+        const parsed = parseGeminiText(generatedText);
+        renderOutput(parsed);
+
+        if (!isPaid) {
+          safeLocalStorageSet("generation_count", count + 1);
+          updateUsageBadge();
+        }
+      } catch (error) {
+        errorBox.textContent = error.message;
+        errorBox.hidden = false;
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>
