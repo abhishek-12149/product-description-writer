@@ -538,18 +538,380 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ------------------------------
+       Claude.ai-inspired minimal UI
+       (Overrides existing styles)
+       ------------------------------ */
+    body {
+      background: #f7f7f5;
+      color: #1a1a1a;
+    }
+
+    .app {
+      max-width: 680px;
+      padding: 60px 16px 32px;
+    }
+
+    .hero {
+      padding-top: 0;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      background: #e8e8e3;
+      color: #666;
+      border-radius: 999px;
+      font-size: 12px;
+      padding: 4px 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: #666;
+      margin-top: 8px;
+      line-height: 1.6;
+      max-width: 520px;
+    }
+
+    .trust-row {
+      margin-top: 14px;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .trust-badge {
+      background: #e8e8e3;
+      color: #555;
+      border: 1px solid rgba(0, 0, 0, 0.02);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .trust-sep {
+      color: #aaa;
+      font-weight: 700;
+      padding: 0 2px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e5e3;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      margin-top: 32px;
+      color: #1a1a1a;
+    }
+
+    /* Progress */
+    .usage-badge {
+      margin-bottom: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+    }
+
+    #usageLabel {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .usage-bar {
+      background: #f0f0ee;
+      height: 4px;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .usage-bar-fill {
+      height: 100%;
+      background: #d97706;
+      border-radius: 999px;
+      transition: width 0.35s ease, background-color 0.2s ease;
+    }
+
+    .usage-green .usage-bar-fill,
+    .usage-yellow .usage-bar-fill {
+      background: #d97706;
+    }
+
+    .usage-red .usage-bar-fill {
+      background: #ef4444;
+    }
+
+    .form-divider {
+      display: none;
+    }
+
+    /* Labels */
+    #writerForm label {
+      color: #444;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: 0;
+      display: block;
+    }
+
+    /* Inputs */
+    #writerForm input,
+    #writerForm select,
+    #writerForm textarea {
+      background: #ffffff;
+      border: 1.5px solid #e5e5e3;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      color: #1a1a1a;
+      transition: 0.15s all;
+      outline: none;
+    }
+
+    #writerForm textarea {
+      min-height: 130px;
+    }
+
+    #writerForm input::placeholder,
+    #writerForm textarea::placeholder {
+      color: #aaaaaa;
+    }
+
+    #writerForm select {
+      /* Keep custom caret visible */
+      padding-right: 42px;
+      background-color: #fff;
+    }
+
+    #writerForm input:focus,
+    #writerForm select:focus,
+    #writerForm textarea:focus {
+      border-color: #d4a574;
+      box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.15);
+    }
+
+    /* Layout */
+    .form-grid {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 12px;
+      row-gap: 20px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field {
+      gap: 6px;
+    }
+
+    .actions {
+      margin-top: 20px;
+    }
+
+    /* Generate button */
+    .btn-primary {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      width: 100%;
+      transition: 0.15s all;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #333;
+      transform: scale(1.01);
+    }
+
+    /* Disable legacy shine effect from earlier styles */
+    .btn-primary::after {
+      display: none;
+    }
+
+    /* Output cards */
+    .results {
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: #fff;
+      border: 1px solid #e5e5e3;
+      border-left: 1px solid #e5e5e3;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 12px;
+      box-shadow: none;
+      transition: none;
+    }
+
+    #results .result-card:nth-child(1),
+    #results .result-card:nth-child(2),
+    #results .result-card:nth-child(3) {
+      border-left-color: #e5e5e3;
+    }
+
+    .result-card:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .result-header {
+      margin-bottom: 8px;
+    }
+
+    .result-header h3 {
+      margin: 0;
+      color: #999;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .result-content {
+      color: #1a1a1a;
+      font-size: 15px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .btn-copy {
+      position: relative;
+      top: 0;
+      right: 0;
+      background: #f0f0ee;
+      color: #555;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+
+    /* Upgrade card */
+    .upgrade-card {
+      background: #ffffff;
+      border: 1px solid #e5e5e3;
+      border-radius: 16px;
+      box-shadow: none;
+      padding: 24px;
+      color: #1a1a1a;
+      margin-top: 12px;
+    }
+
+    .upgrade-crown {
+      color: #1a1a1a;
+      font-size: 16px;
+      margin-bottom: 10px;
+      font-weight: 900;
+    }
+
+    .upgrade-headline {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0 0 8px;
+    }
+
+    .upgrade-subtext {
+      color: #666;
+      margin: 0 0 14px;
+      font-weight: 600;
+    }
+
+    .upgrade-price {
+      font-size: 22px;
+      color: #1a1a1a;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .upgrade-benefits {
+      margin: 0 0 18px;
+    }
+
+    .upgrade-benefits li {
+      color: #1a1a1a;
+      font-weight: 600;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .upgrade-benefits .check {
+      color: #d97706;
+      font-weight: 900;
+      font-size: 16px;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 40px 0 32px;
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+      margin-top: 24px;
+      border-top: 0;
+    }
+
+    .footer-line {
+      margin-bottom: 10px;
+      color: #999;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .footer-email {
+      color: #999;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        padding-top: 40px;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .card {
+        padding: 24px;
+      }
+    }
   </style>
 </head>
 <body>
   <main class="app">
     <section class="hero">
       <div class="hero-badge">
-        <span class="sparkle" aria-hidden="true">✦</span>
-        <span>AI Powered</span>
+        <span>AI-Powered</span>
       </div>
-      <h1>Write Product Descriptions That Sell</h1>
+      <h1>Write product descriptions that sell</h1>
       <p>
-        Generate SEO-optimized listings for Amazon, Shopify and Etsy in 10 seconds — powered by AI
+        Generate SEO-optimized listings for Amazon, Shopify and Etsy in seconds
       </p>
       <div class="trust-row" aria-label="Trust badges">
         <div class="trust-badge">10x Faster</div>
@@ -569,8 +931,6 @@
       </div>
 
       <div class="form-divider" aria-hidden="true"></div>
-
-      <h2 class="form-title">Generate Your Listing</h2>
 
       <form id="writerForm">
         <div class="form-grid">
@@ -635,8 +995,7 @@
     </section>
 
     <footer class="footer">
-      <div class="footer-title">AI Product Description Writer</div>
-      <div class="footer-made">Made with AI</div>
+      <div class="footer-line">AI Product Description Writer · Made with AI</div>
       <div class="footer-email">Your email: abhishek@gmail.com</div>
     </footer>
   </main>
@@ -698,7 +1057,7 @@
       const used = isPaid ? Math.min(count, GENERATION_LIMIT) : Math.min(count, GENERATION_LIMIT);
 
       if (usageLabel) {
-        usageLabel.textContent = `Free generations used: ${used} / ${GENERATION_LIMIT}`;
+        usageLabel.textContent = `${used} of ${GENERATION_LIMIT} free generations used`;
       }
       if (usageProgressBar) {
         usageProgressBar.style.width = `${(used / GENERATION_LIMIT) * 100}%`;
@@ -722,18 +1081,23 @@
 
       const crown = document.createElement("div");
       crown.className = "upgrade-crown";
-      crown.textContent = "♛ Upgrade to Pro";
+      crown.textContent = "♛";
       upgradeCard.appendChild(crown);
 
       const headline = document.createElement("div");
       headline.className = "upgrade-headline";
-      headline.textContent = "You've unlocked everything free has to offer";
+      headline.textContent = "You've used all your free generations";
       upgradeCard.appendChild(headline);
 
       const subtext = document.createElement("p");
       subtext.className = "upgrade-subtext";
-      subtext.textContent = "Join Pro for unlimited generations — $19/month";
+      subtext.textContent = "Upgrade to Pro for unlimited generations";
       upgradeCard.appendChild(subtext);
+
+      const price = document.createElement("div");
+      price.className = "upgrade-price";
+      price.textContent = "$19 / month";
+      upgradeCard.appendChild(price);
 
       const benefits = document.createElement("ul");
       benefits.className = "upgrade-benefits";
@@ -815,10 +1179,14 @@
       copyButton.addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(copyText);
-          copyButton.textContent = "Copied! ✓";
+          copyButton.textContent = "Copied ✓";
+          copyButton.style.color = "#16a34a";
+          copyButton.style.backgroundColor = "#dcfce7";
           setTimeout(() => {
             copyButton.textContent = "Copy";
-          }, 1200);
+            copyButton.style.color = "";
+            copyButton.style.backgroundColor = "";
+          }, 1500);
         } catch (err) {
           alert("Copy failed: " + err.message);
         }
