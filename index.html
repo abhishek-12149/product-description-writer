@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Product Description Writer</title>
+  <style>
+    :root {
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --gray-100: #f3f4f6;
+      --gray-300: #d1d5db;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --gray-900: #111827;
+      --white: #ffffff;
+      --red-50: #fef2f2;
+      --red-700: #b91c1c;
+      --shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--white);
+      color: var(--gray-900);
+      line-height: 1.5;
+    }
+
+    .app {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .header {
+      margin-bottom: 22px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.9rem;
+      color: var(--blue-700);
+    }
+
+    .header p {
+      margin: 8px 0 0;
+      color: var(--gray-500);
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--gray-300);
+      border-radius: 12px;
+      background: var(--white);
+      color: var(--gray-900);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--blue-500);
+      outline: none;
+      box-shadow: 0 0 0 4px var(--blue-50);
+    }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      border: none;
+      background: linear-gradient(180deg, var(--blue-500), var(--blue-700));
+      color: var(--white);
+      font-weight: 600;
+      padding: 11px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .message {
+      font-size: 0.95rem;
+      color: var(--gray-700);
+    }
+
+    .error {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid #fecaca;
+      background: var(--red-50);
+      border-radius: 12px;
+      color: var(--red-700);
+      white-space: pre-wrap;
+    }
+
+    .results {
+      margin-top: 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .result-card {
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: #fcfdff;
+    }
+
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .result-header h3 {
+      margin: 0;
+      color: var(--blue-700);
+      font-size: 1.05rem;
+    }
+
+    .btn-copy {
+      border: 1px solid var(--blue-500);
+      color: var(--blue-700);
+      background: var(--white);
+      border-radius: 10px;
+      padding: 7px 11px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: var(--blue-50);
+    }
+
+    .result-content {
+      color: var(--gray-900);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    ul.bullets {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    ul.bullets li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="header">
+      <h1>AI Product Description Writer</h1>
+      <p>Generate high-converting product listings for your e-commerce store with Gemini.</p>
+    </section>
+
+    <section class="card">
+      <form id="writerForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="productName">Product name</label>
+            <input id="productName" name="productName" type="text" required />
+          </div>
+
+          <div class="field">
+            <label for="category">Product category</label>
+            <select id="category" name="category" required>
+              <option value="">Select category</option>
+              <option>Electronics</option>
+              <option>Clothing</option>
+              <option>Home &amp; Kitchen</option>
+              <option>Beauty</option>
+              <option>Sports</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="features">Key features</label>
+            <textarea
+              id="features"
+              name="features"
+              placeholder="List 3-5 key features, one per line"
+              required
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label for="targetCustomer">Target customer</label>
+            <input
+              id="targetCustomer"
+              name="targetCustomer"
+              type="text"
+              placeholder="e.g. busy moms, gym enthusiasts"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="platform">Platform</label>
+            <select id="platform" name="platform" required>
+              <option value="">Select platform</option>
+              <option>Amazon</option>
+              <option>Shopify</option>
+              <option>Etsy</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="generateBtn" class="btn-primary">Generate Description</button>
+          <span id="statusMessage" class="message" aria-live="polite"></span>
+        </div>
+      </form>
+
+      <div id="errorBox" class="error" hidden></div>
+      <section id="results" class="results" hidden></section>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("writerForm");
+    const generateBtn = document.getElementById("generateBtn");
+    const statusMessage = document.getElementById("statusMessage");
+    const errorBox = document.getElementById("errorBox");
+    const results = document.getElementById("results");
+
+    function setLoading(isLoading) {
+      generateBtn.disabled = isLoading;
+      statusMessage.textContent = isLoading ? "Generating your description..." : "";
+    }
+
+    function extractSection(text, startLabel, endLabel) {
+      const start = text.indexOf(startLabel);
+      if (start === -1) return "";
+      const contentStart = start + startLabel.length;
+      const end = endLabel ? text.indexOf(endLabel, contentStart) : -1;
+      const segment = end === -1 ? text.slice(contentStart) : text.slice(contentStart, end);
+      return segment.trim();
+    }
+
+    function parseGeminiText(text) {
+      const title = extractSection(text, "TITLE:", "BULLET POINTS:");
+      const bulletsRaw = extractSection(text, "BULLET POINTS:", "DESCRIPTION:");
+      const description = extractSection(text, "DESCRIPTION:", null);
+
+      const bullets = bulletsRaw
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.startsWith("-") || line.startsWith("•"))
+        .map((line) => line.replace(/^[-•]+\s*/, "").trim());
+
+      return { title, bullets, description };
+    }
+
+    function createResultCard(title, contentNode, copyText) {
+      const card = document.createElement("article");
+      card.className = "result-card";
+
+      const header = document.createElement("div");
+      header.className = "result-header";
+
+      const heading = document.createElement("h3");
+      heading.textContent = title;
+
+      const copyButton = document.createElement("button");
+      copyButton.type = "button";
+      copyButton.className = "btn-copy";
+      copyButton.textContent = "Copy";
+      copyButton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(copyText);
+          copyButton.textContent = "Copied!";
+          setTimeout(() => {
+            copyButton.textContent = "Copy";
+          }, 1200);
+        } catch (err) {
+          alert("Copy failed: " + err.message);
+        }
+      });
+
+      header.appendChild(heading);
+      header.appendChild(copyButton);
+      card.appendChild(header);
+      card.appendChild(contentNode);
+      return card;
+    }
+
+    function renderOutput(parsed) {
+      results.innerHTML = "";
+
+      const titleNode = document.createElement("div");
+      titleNode.className = "result-content";
+      titleNode.textContent = parsed.title || "No title returned.";
+      results.appendChild(createResultCard("Title", titleNode, titleNode.textContent));
+
+      const bulletsWrap = document.createElement("div");
+      bulletsWrap.className = "result-content";
+      const ul = document.createElement("ul");
+      ul.className = "bullets";
+
+      if (parsed.bullets.length) {
+        parsed.bullets.forEach((bullet) => {
+          const li = document.createElement("li");
+          li.textContent = bullet;
+          ul.appendChild(li);
+        });
+      } else {
+        const li = document.createElement("li");
+        li.textContent = "No bullet points returned.";
+        ul.appendChild(li);
+      }
+
+      bulletsWrap.appendChild(ul);
+      results.appendChild(
+        createResultCard(
+          "Bullet Points",
+          bulletsWrap,
+          parsed.bullets.map((b) => "- " + b).join("\n") || "No bullet points returned."
+        )
+      );
+
+      const descriptionNode = document.createElement("div");
+      descriptionNode.className = "result-content";
+      descriptionNode.textContent = parsed.description || "No description returned.";
+      results.appendChild(
+        createResultCard("Description", descriptionNode, descriptionNode.textContent)
+      );
+
+      results.hidden = false;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      errorBox.hidden = true;
+      results.hidden = true;
+      results.innerHTML = "";
+
+      const productName = document.getElementById("productName").value.trim();
+      const productCategory = document.getElementById("category").value.trim();
+      const keyFeatures = document.getElementById("features").value.trim();
+      const targetCustomer = document.getElementById("targetCustomer").value.trim();
+      const platform = document.getElementById("platform").value.trim();
+
+      setLoading(true);
+
+      try {
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            productName,
+            productCategory,
+            keyFeatures,
+            targetCustomer,
+            platform
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          const apiError =
+            data && data.error
+              ? data.error
+              : `HTTP ${response.status}`;
+          throw new Error(apiError);
+        }
+
+        const generatedText = data.result;
+        if (!generatedText) {
+          throw new Error("API returned an empty response.");
+        }
+
+        const parsed = parseGeminiText(generatedText);
+        renderOutput(parsed);
+      } catch (error) {
+        errorBox.textContent = error.message;
+        errorBox.hidden = false;
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>
