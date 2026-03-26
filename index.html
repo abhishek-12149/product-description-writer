@@ -1139,9 +1139,64 @@
       const btn = document.createElement("button");
       btn.className = "btn-upgrade";
       btn.textContent = "Upgrade to Pro →";
-      btn.addEventListener("click", () => {
-        alert("Payment coming soon! Email us at abhishek@gmail.com to get early access.");
-      });
+      btn.addEventListener("click", async () => {
+  try {
+    btn.textContent = "Loading...";
+    btn.disabled = true;
+
+    const orderRes = await fetch("/api/create-order", { method: "POST" });
+    const orderData = await orderRes.json();
+
+    if (!orderData.order_id) throw new Error("Could not create order");
+
+    const options = {
+      key: "rzp_live_REPLACE_WITH_YOUR_KEY_ID",
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: "ListifyAI",
+      description: "Pro Plan — Unlimited Generations",
+      order_id: orderData.order_id,
+      handler: async function (response) {
+        const verifyRes = await fetch("/api/verify-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          }),
+        });
+
+        const verifyData = await verifyRes.json();
+
+        if (verifyData.success) {
+          safeLocalStorageSet("is_paid_user", "true");
+          safeLocalStorageSet("generation_count", "0");
+          updateUsageBadge();
+          results.hidden = true;
+          results.innerHTML = "";
+          alert("🎉 Welcome to Pro! You now have unlimited generations.");
+        } else {
+          alert("Payment verification failed. Please contact abhishek@gmail.com");
+        }
+      },
+      prefill: { name: "", email: "", contact: "" },
+      theme: { color: "#6366f1" },
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.on("payment.failed", function () {
+      alert("Payment failed. Please try again.");
+    });
+    rzp.open();
+
+  } catch (err) {
+    alert("Something went wrong: " + err.message);
+  } finally {
+    btn.textContent = "Upgrade to Pro →";
+    btn.disabled = false;
+  }
+});
 
       upgradeCard.appendChild(btn);
       results.appendChild(upgradeCard);
